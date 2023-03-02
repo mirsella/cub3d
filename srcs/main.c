@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 11:58:46 by dly               #+#    #+#             */
-/*   Updated: 2023/03/02 15:20:12 by dly              ###   ########.fr       */
+/*   Updated: 2023/03/02 16:38:34 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	if (argc != 2)
 		return (1);
-	if (!init_map(&map))
+	if (init_map(&map))
 		return (2);
 	map.mlx = mlx_init();
 	if (!map.mlx)
