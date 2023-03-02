@@ -33,7 +33,10 @@ int	end_game(t_data *data)
 
 int	init_map(t_data *data)
 {
+	// data->map->map_matrix = {}
 	data->map = malloc(sizeof(t_map));
+	if (!data->map)
+		return (free_map(data), 1);
 	data->map->mlx = NULL;
 	data->map->win = NULL;
 	data->map->map_matrix = NULL;
@@ -73,6 +76,25 @@ int	key_hook(int keycode, t_data *data)
 	return (0);
 }
 
+int	check_file(char *file, t_data *data)
+{
+	int	fd;
+
+	if (!ft_strnstr(file + ft_strlen(file) - 4, ".cub", 4))
+		return (ft_putstr_fd(INV_FILE, 2), free_map(data), 1);
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		return (ft_putstr_fd(INV_FILE_NOT_FOUND, 2), free_map(data), 1);
+	return (0);
+}
+
+int	parse_map(char *file, t_data *data)
+{
+	if (check_file(file, data))
+		return (1);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -83,6 +105,8 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if (init_map(&data))
 		return (2);
+	if (parse_map(argv[1], &data))
+		return (3);
 	assign_map(&data);
 	mlx_hook(data.map->win, 2, 1L << 0, key_hook, &data);
 	mlx_hook(data.map->win, 17, 0, end_game, &data);

@@ -43,6 +43,9 @@ $(MLX):
 
 bonus: all
 
+test:
+	./$(NAME) maps/map.cub
+
 norm:
 	norminette srcs/ includes/
 

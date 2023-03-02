@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 12:03:45 by dly               #+#    #+#             */
-/*   Updated: 2023/03/02 14:51:38 by dly              ###   ########.fr       */
+/*   Updated: 2023/03/02 19:42:06 by dly              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "struct.h" // struct
 # include "define.h" 
 # include <stdlib.h> // EXIT_*
+# include <fcntl.h> // open()
 # include <mlx.h>
 
 #endif
