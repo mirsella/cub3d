@@ -6,7 +6,7 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 12:12:05 by dly               #+#    #+#             */
-/*   Updated: 2023/03/02 18:44:56 by dly              ###   ########.fr       */
+/*   Updated: 2023/03/03 11:29:48 by lgillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_map
 
 typedef struct s_data
 {
-	t_map	*map;
+	t_map	map;
 	t_img	img;
 	t_ray	ray;
 }	t_data;
