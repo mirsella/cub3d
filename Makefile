@@ -1,4 +1,4 @@
-SRCS_MAIN = main.c 
+SRCS_MAIN = main.c free.c
 SRCS_MAP = map.c
 SRCS = $(addprefix srcs/, $(SRCS_MAIN)) \
 		$(addprefix srcs/map/, $(SRCS_MAP))
