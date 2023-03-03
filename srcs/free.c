@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_pixel.c                                     :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: lgillard <mirsella@protonmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 17:49:00 by dly               #+#    #+#             */
-/*   Updated: 2023/03/03 14:09:58 by lgillard         ###   ########.fr       */
+/*   Created: 2023/03/03 16:01:17 by lgillard          #+#    #+#             */
+/*   Updated: 2023/03/03 16:13:12 by lgillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	my_mlx_pixel_put(t_img *img, int y, int x, int color)
+int	free_map(t_map *map)
 {
-	char	*dst;
-
-	dst = img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
+	if (map->mlx && map->win)
+		mlx_destroy_window(map->mlx, map->win);
+	if (map->mlx)
+		mlx_destroy_display(map->mlx);
+	if (map->mlx)
+		free(map->mlx);
+	if (map->map_matrix)
+		free(map->map_matrix);
+	return (0);
 }

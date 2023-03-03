@@ -1,21 +1,20 @@
 SRCS_MAIN = main.c 
-SRCS = $(addprefix srcs/, $(SRCS_MAIN)) 
+SRCS_MAP = map.c
+SRCS = $(addprefix srcs/, $(SRCS_MAIN)) \
+		$(addprefix srcs/map/, $(SRCS_MAP))
 OBJS = $(SRCS:.c=.o)
 
-CC = cc
+CC = /usr/bin/cc
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS += -g3
 # CFLAGS += -fsanitize=address
-INCLUDE = -Lmlx -lmlx -Lincludes -Imlx -lXext -lX11 -lm -lz
+INCLUDE = -Lmlx -lmlx -Lincludes -Imlx -lXext -lX11 -lm
 
 LIBFT = libft/libft.a
 MLX = mlx/libmlx.a
 NAME = cub3d 
 
 all: $(NAME)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -Iincludes -Imlx -O3 -c $< -o $@
 
 $(NAME): $(MLX) $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(INCLUDE) -o $(NAME) $(OBJS) $(LIBFT) $(MLX) 
@@ -50,6 +49,6 @@ norm:
 	norminette srcs/ includes/
 
 leak:
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=rl_leaks.txt ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes ./$(NAME)
 
 .PHONY: all clean fclean ffclean re rere bonus norm leak

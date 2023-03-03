@@ -6,92 +6,47 @@
 /*   By: dly <dly@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 11:58:46 by dly               #+#    #+#             */
-/*   Updated: 2023/03/02 18:08:00dly              ###   ########.fr       */
+/*   Updated: 2023/03/03 16:13:12 by lgillard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	free_map(t_data *data)
-{
-	if (data->map->mlx && data->map->win)
-		mlx_destroy_window(data->map->mlx, data->map->win);
-	if (data->map->mlx)
-		mlx_destroy_display(data->map->mlx);
-	if (data->map->mlx)
-		free(data->map->mlx);
-	if (data->map)
-		free(data->map);
-	return (0);
-}
-
 int	end_game(t_data *data)
 {
-	free_map(data);
+	free_map(&data->map);
 	exit(EXIT_SUCCESS);
 }
 
-int	init_map(t_data *data)
+int	assign_map(t_map *map)
 {
-	// data->map->map_matrix = {}
-	data->map = malloc(sizeof(t_map));
-	if (!data->map)
-		return (free_map(data), 1);
-	data->map->mlx = NULL;
-	data->map->win = NULL;
-	data->map->map_matrix = NULL;
-	return (0);
-}
-
-int	assign_map(t_data *data)
-{
-	data->map->mlx = mlx_init();
-	if (!data->map->mlx)
-		return (free_map(data), 1);
-	data->map->win = mlx_new_window(data->map->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
-	if (!data->map->win)
-		return (free_map(data), 1);
-
+	map->mlx = mlx_init();
+	if (!map->mlx)
+		return (free_map(map), 1);
+	map->win = mlx_new_window(map->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3d");
+	if (!map->win)
+		return (free_map(map), 1);
 	return (0);
 }
 
 int	key_hook(int keycode, t_data *data)
 {
-	if (keycode == KEY_ESC)
+	if (keycode == XK_Escape)
 		end_game(data);
-	if (keycode == KEY_W)
+	if (keycode == XK_W)
 		end_game(data);
-	if (keycode == KEY_A)
+	if (keycode == XK_A)
 		end_game(data);
-	if (keycode == KEY_S)
+	if (keycode == XK_S)
 		end_game(data);
-	if (keycode == KEY_D)
+	if (keycode == XK_D)
 		end_game(data);
-	if (keycode == KEY_L_ARROW)
+	if (keycode == XK_Left)
 		end_game(data);
-	if (keycode == KEY_R_ARROW)
+	if (keycode == XK_Right)
 		end_game(data);
-	if (keycode == KEY_SPC)
+	if (keycode == XK_space)
 		end_game(data);
-	return (0);
-}
-
-int	check_file(char *file, t_data *data)
-{
-	int	fd;
-
-	if (!ft_strnstr(file + ft_strlen(file) - 4, ".cub", 4))
-		return (ft_putstr_fd(INV_FILE, 2), free_map(data), 1);
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (ft_putstr_fd(INV_FILE_NOT_FOUND, 2), free_map(data), 1);
-	return (0);
-}
-
-int	parse_map(char *file, t_data *data)
-{
-	if (check_file(file, data))
-		return (1);
 	return (0);
 }
 
@@ -101,15 +56,14 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)envp;
+	ft_bzero(&data, sizeof(t_data));
 	if (argc != 2)
 		return (1);
-	if (init_map(&data))
-		return (2);
 	if (parse_map(argv[1], &data))
 		return (3);
-	assign_map(&data);
-	mlx_hook(data.map->win, 2, 1L << 0, key_hook, &data);
-	mlx_hook(data.map->win, 17, 0, end_game, &data);
-	mlx_loop(data.map->mlx);
+	assign_map(&data.map);
+	mlx_hook(data.map.win, 2, 1L << 0, key_hook, &data);
+	mlx_hook(data.map.win, 17, 0, end_game, &data);
+	mlx_loop(data.map.mlx);
 	return (0);
 }
